@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "zip-rar-tool"
+version = "0.1.0"
+description = "Extract and compress ZIP, RAR, 7z archives"
+requires-python = ">=3.10"
+dependencies = [
+    "typer>=0.9",
+    "rarfile>=4.2",
+    "py7zr>=0.22",
+]
+
+[project.scripts]
+zip-rar-tool = "zip_rar_tool.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["zip_rar_tool*"]
