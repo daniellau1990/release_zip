@@ -24,3 +24,10 @@
 - Multi-file compression (option B)
 - Three-tier defense system (AGENTS.md hooks + plugin + pre-commit)
 - CLI: extract/list/compress commands
+## v0.1.2 (2026-05-05) 	ag: v0.1.2
+
+- Fix: Chinese path encoding (temp file instead of echo pipe)
+- Fix: auto-append ".zip" when output has no suffix
+- Fix: multi-file drag-drop via for loop in .bat
+- Add: test_logs/ directory for test output retention
+- Add: 5 batch_compress tests (single, multi, folder, auto-suffix, quoted)

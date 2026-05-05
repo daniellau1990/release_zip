@@ -28,11 +28,9 @@ cls
 echo ===== Extract =====
 set /p "archive=Archive path (drag file here): "
 if "%archive%"=="" goto MENU
-
 set "outdir=%~dpn1"
 set /p "output=Output dir (Enter for default): "
 if "%output%"=="" set "output=%outdir%"
-
 .venv\Scripts\python.exe -m zip_rar_tool extract "%archive%" "%output%"
 echo.
 pause
@@ -42,13 +40,17 @@ goto MENU
 cls
 echo ===== Compress (multi-file) =====
 set "files="
-set /p "files=Files/folders (drag here, space separated): "
+set /p "files=Files/folders (select all, then drag here): "
 if "%files%"=="" goto MENU
 
-set /p "output=Output filename (Enter for archive.zip): "
+set "output="
+set /p "output=Output filename (supported: .zip, .7z, e.g. myarchive.zip): "
 if "%output%"=="" set "output=archive.zip"
 
-echo %files%| .venv\Scripts\python.exe -m zip_rar_tool.batch_compress "%output%"
+set "tmpfile=%TEMP%\zip_rar_files_%RANDOM%.txt"
+(for %%f in (%files%) do @echo %%f) > "%tmpfile%"
+.venv\Scripts\python.exe -m zip_rar_tool.batch_compress "%output%" "%tmpfile%"
+del "%tmpfile%" 2>nul
 echo.
 pause
 goto MENU
@@ -58,7 +60,6 @@ cls
 echo ===== List Contents =====
 set /p "archive=Archive path (drag file here): "
 if "%archive%"=="" goto MENU
-
 .venv\Scripts\python.exe -m zip_rar_tool list "%archive%"
 echo.
 pause

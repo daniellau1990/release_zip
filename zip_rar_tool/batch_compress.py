@@ -1,21 +1,40 @@
-"""Multi-file compression helper for interactive .bat"""
+"""Multi-file compression. Args: output_path [input_file]"""
 import sys
 import shlex
 from pathlib import Path
 
 if len(sys.argv) < 2:
-    sys.exit("Usage: batch_compress.py output_path")
+    sys.exit("Usage: batch_compress.py output_path [input_file]")
 
 output = sys.argv[1]
 out = Path(output)
 
-# Read file list from stdin (bypasses cmd argument parsing issues)
-line = sys.stdin.read().strip()
-if not line:
+# Read file list from temp file (argv[2]) or stdin
+if len(sys.argv) >= 3:
+    with open(sys.argv[2], encoding="utf-8") as f:
+        content = f.read()
+else:
+    content = sys.stdin.read()
+
+content = content.strip()
+if not content:
     sys.exit("No input files provided")
 
-inputs = [s.strip('"') for s in shlex.split(line, posix=False)]
+# Split by newlines then by spaces (handles both drag-drop modes)
+raw_tokens = []
+for line in content.splitlines():
+    raw_tokens.extend(shlex.split(line.strip(), posix=False))
+inputs = [s.strip('"') for s in raw_tokens if s.strip('"')]
+
+if not inputs:
+    sys.exit("No valid input files")
+
+# Auto-append .zip when no suffix
 ext = out.suffix.lower()
+if not ext:
+    output += ".zip"
+    out = Path(output)
+    ext = ".zip"
 
 if ext == ".zip":
     import zipfile

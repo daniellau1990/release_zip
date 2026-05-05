@@ -1,4 +1,4 @@
-﻿# AGENTS.md
+# AGENTS.md
 
 ## 项目概述
 Python �?+ CLI 工具，用于压�?解压 ZIP、RAR�?z 格式�?
@@ -135,7 +135,7 @@ git config core.hooksPath .githooks
 - 每个子代理执行前**必须读取 `openspec/specs/`** 获取上下�?
 - 逐任务执行，每完成一�?task �?commit
 
-### 6. 测试验证（两层）
+### 6. 测试验证（两层 + 日志保留）
 - **TDD（`superpowers-skills-test-driven-development`�?*�?
   写新代码前先写测试，保证新功能正�?
 - **全量回归（`pytest tests/`�?*�?
