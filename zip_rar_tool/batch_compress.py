@@ -1,6 +1,6 @@
 """Multi-file compression. Args: output_path [input_file]"""
 import sys
-import shlex
+import re
 from pathlib import Path
 
 if len(sys.argv) < 2:
@@ -20,11 +20,9 @@ content = content.strip()
 if not content:
     sys.exit("No input files provided")
 
-# Split by newlines then by spaces (handles both drag-drop modes)
-raw_tokens = []
-for line in content.splitlines():
-    raw_tokens.extend(shlex.split(line.strip(), posix=False))
-inputs = [s.strip('"') for s in raw_tokens if s.strip('"')]
+# Split by regex: handles both space-separated and "quoted"adjacent paths
+raw_tokens = re.findall(r'"[^"]*"|\S+', content)
+inputs = [t.strip('"') for t in raw_tokens if t.strip('"')]
 
 if not inputs:
     sys.exit("No valid input files")

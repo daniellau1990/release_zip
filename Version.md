@@ -31,3 +31,9 @@
 - Fix: multi-file drag-drop via for loop in .bat
 - Add: test_logs/ directory for test output retention
 - Add: 5 batch_compress tests (single, multi, folder, auto-suffix, quoted)
+
+## v0.1.3 (2026-05-05) 	ag: v0.1.3`r
+
+- Fix: output path now uses user's working directory (not project dir)
+- Fix: drag-drop concatenated paths "quoted"adjacent parsed correctly
+- Change: regex instead of shlex.split for Windows path parsing

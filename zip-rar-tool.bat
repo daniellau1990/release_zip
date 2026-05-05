@@ -1,7 +1,8 @@
 @echo off
 chcp 65001 >nul
 setlocal enabledelayedexpansion
-cd /d "%~dp0"
+
+set "PY=%~dp0.venv\Scripts\python.exe"
 
 :MENU
 cls
@@ -28,10 +29,9 @@ cls
 echo ===== Extract =====
 set /p "archive=Archive path (drag file here): "
 if "%archive%"=="" goto MENU
-set "outdir=%~dpn1"
-set /p "output=Output dir (Enter for default): "
-if "%output%"=="" set "output=%outdir%"
-.venv\Scripts\python.exe -m zip_rar_tool extract "%archive%" "%output%"
+set /p "output=Output dir (Enter for default - archive name): "
+if "%output%"=="" set "output=%~dpn1"
+"%PY%" -m zip_rar_tool extract "%archive%" "%output%"
 echo.
 pause
 goto MENU
@@ -49,7 +49,7 @@ if "%output%"=="" set "output=archive.zip"
 
 set "tmpfile=%TEMP%\zip_rar_files_%RANDOM%.txt"
 (for %%f in (%files%) do @echo %%f) > "%tmpfile%"
-.venv\Scripts\python.exe -m zip_rar_tool.batch_compress "%output%" "%tmpfile%"
+"%PY%" "%~dp0zip_rar_tool\batch_compress.py" "%output%" "%tmpfile%"
 del "%tmpfile%" 2>nul
 echo.
 pause
@@ -60,7 +60,7 @@ cls
 echo ===== List Contents =====
 set /p "archive=Archive path (drag file here): "
 if "%archive%"=="" goto MENU
-.venv\Scripts\python.exe -m zip_rar_tool list "%archive%"
+"%PY%" -m zip_rar_tool list "%archive%"
 echo.
 pause
 goto MENU

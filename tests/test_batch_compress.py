@@ -93,6 +93,25 @@ def test_auto_suffix(tmp_path):
     assert not out.exists()
 
 
+def test_concat_quoted_unquoted(tmp_path):
+    """Handle Windows drag-drop: "quoted"unquoted (no space between)"""
+    quoted = tmp_path / "my file.txt"; quoted.write_text("quoted")
+    unquoted = tmp_path / "plain.txt"; unquoted.write_text("plain")
+
+    # Simulate: "my file.txt"plain.txt with NO space between
+    input_line = f'"{quoted}"{unquoted}'
+    out = tmp_path / "out.zip"
+
+    proc = _run_with_temp(input_line, out, tmp_path)
+    assert proc.returncode == 0, proc.stderr
+
+    import zipfile
+    with zipfile.ZipFile(str(out)) as zf:
+        names = zf.namelist()
+        assert "my file.txt" in names, names
+        assert "plain.txt" in names, names
+
+
 def test_quoted_paths(tmp_path):
     """Paths with spaces or special chars in quotes"""
     folder = tmp_path / "my folder"
