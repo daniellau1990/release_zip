@@ -48,7 +48,7 @@ if "%files%"=="" goto MENU
 set /p "output=Output filename (Enter for archive.zip): "
 if "%output%"=="" set "output=archive.zip"
 
-.venv\Scripts\python.exe -m zip_rar_tool.batch_compress %files% "%output%"
+echo %files%| .venv\Scripts\python.exe -m zip_rar_tool.batch_compress "%output%"
 echo.
 pause
 goto MENU
