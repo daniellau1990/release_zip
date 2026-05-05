@@ -27,6 +27,13 @@ inputs = [t.strip('"') for t in raw_tokens if t.strip('"')]
 if not inputs:
     sys.exit("No valid input files")
 
+# If output is relative, save in same dir as first input file
+if not Path(output).is_absolute() and inputs:
+    first_dir = Path(inputs[0]).parent
+    output = str(first_dir / output)
+
+out = Path(output)
+
 # Auto-append .zip when no suffix
 ext = out.suffix.lower()
 if not ext:

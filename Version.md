@@ -37,3 +37,7 @@
 - Fix: output path now uses user's working directory (not project dir)
 - Fix: drag-drop concatenated paths "quoted"adjacent parsed correctly
 - Change: regex instead of shlex.split for Windows path parsing
+
+## v0.1.4 (2026-05-05) 	ag: v0.1.4 commit: HEAD`r
+
+- Fix: output auto-saves to first input file's directory (even if .bat runs elsewhere)
