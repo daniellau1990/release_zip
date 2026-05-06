@@ -3,14 +3,18 @@ chcp 65001 >nul
 setlocal enabledelayedexpansion
 
 set "PY=%~dp0.venv\Scripts\python.exe"
-set "LOGFILE=%~dp0logs\runs\run_log_%date:~0,10%.txt"
+if not exist "%~dp0logs\runs" mkdir "%~dp0logs\runs"
+set "LOGDATE=%date:~0,10%"
+set "LOGDATE=%LOGDATE:/=-%"
+set "LOGDATE=%LOGDATE: =_%"
+set "LOGFILE=%~dp0logs\runs\run_log_%LOGDATE%.txt"
 echo ===== %date% %time% ===== >> "%LOGFILE%"
 echo [START] New session >> "%LOGFILE%"
 
 :MENU
 cls
 echo ======================================
-echo    ZIP/RAR/7z Tool  v0.1.0
+echo    ZIP/RAR/7z Tool  v0.2.1
 echo    Interactive Mode
 echo ======================================
 echo.

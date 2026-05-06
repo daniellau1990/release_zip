@@ -4,8 +4,17 @@
 
 | Version | Git Tag | Commit | Date |
 |---------|:-------:|:------:|:----:|
+| v0.2.1  | v0.2.1 | PENDING | 2026-05-06 |
 | v0.1.1  | 0.1.1 | 2543dbf | 2026-05-04 |
 | v0.1.0  | 0.1.0 | 6688038 | 2026-05-04 |
+
+---
+
+## v0.2.1 (2026-05-06) tag: v0.2.1 commit: PENDING
+
+- Fix: Chinese locale %date% slash breaks LOGFILE path, prevents all commands from running
+- Fix: add mkdir logs/runs/ defense before first log write
+- Root cause: %date% = 2026/05/06, / interpreted as dir separator in CMD redirect
 
 ---
 
