@@ -4,7 +4,7 @@
 
 | Version | Git Tag | Commit | Time (UTC+8) |
 |---------|:-------:|:------:|--------------|
-| v0.2.3  | v0.2.3 | PENDING | PENDING |
+| v0.2.3  | v0.2.3 | f8c7b64 | 2026-05-06 19:16:21 |
 | v0.2.2  | v0.2.2 | 30c4972 | 2026-05-06 18:43:33 | **STABLE** |
 | v0.2.1  | v0.2.1 | 3d573a1 | 2026-05-06 18:26:39 |
 | v0.2.0  | v0.2.0 | 055e579 | 2026-05-06 14:33:19 |
@@ -16,7 +16,7 @@
 
 ---
 
-## v0.2.3 (PENDING) tag: v0.2.3 commit: PENDING
+## v0.2.3 (2026-05-06 19:16:21) tag: v0.2.3 commit: f8c7b64
 
 - Fix: extract output relative path now resolves relative to archive's directory
 - Root cause: `output=1` (relative) resolved against .bat CWD (project dir), not archive dir
