@@ -166,6 +166,9 @@ git config core.hooksPath .githooks
 
 **如果任何一个答案是 NO，不要写代码。按顺序走完前面的步骤�?*
 
+### 日志规则
+- NEVER delete 运行日志（logs/runs/）和测试日志（docs/test-logs/）
+- 运行日志用 >> 追加，文件名含日期 un_log_YYYY-MM-DD.txt`n- 测试日志每次保存到 docs/test-logs/YYYY-MM-DD-<feature>.txt`n
 ### 其他规则
 
 - 执行范围内：当前项目目录下的任何增删查改操作�?*直接执行，无需询问**

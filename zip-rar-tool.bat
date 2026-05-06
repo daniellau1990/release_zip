@@ -3,7 +3,7 @@ chcp 65001 >nul
 setlocal enabledelayedexpansion
 
 set "PY=%~dp0.venv\Scripts\python.exe"
-set "LOGFILE=%~dp0run_log.txt"
+set "LOGFILE=%~dp0logs\runs\run_log_%date:~0,10%.txt"
 echo ===== %date% %time% ===== >> "%LOGFILE%"
 echo [START] New session >> "%LOGFILE%"
 
