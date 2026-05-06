@@ -41,3 +41,9 @@
 ## v0.1.4 (2026-05-05) 	ag: v0.1.4 commit: 0df2da3`r
 
 - Fix: output auto-saves to first input file's directory (even if .bat runs elsewhere)
+
+## v0.2.0 (2026-05-06) 	ag: v0.2.0 commit: HEAD`r
+
+- **BREAKING FIX**: if defined instead of quoted if (cmd crash from drag-drop quotes)
+- Add: run_log.txt >> append mode (never overwrite old logs)
+- Add: debugging 5-whys principle to AGENTS.md

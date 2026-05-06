@@ -135,7 +135,7 @@ git config core.hooksPath .githooks
 - 每个子代理执行前**必须读取 `openspec/specs/`** 获取上下�?
 - 逐任务执行，每完成一�?task �?commit
 
-### 6. 测试验证（两层 + 日志保留）
+### 6. 测试验证（两层 + 日志保留）`n- **运行日志叠加**：`.bat` 中的 `run_log.txt` 使用 `>>` 追加模式，每次运行叠�?不覆盖旧记录
 - **TDD（`superpowers-skills-test-driven-development`�?*�?
   写新代码前先写测试，保证新功能正�?
 - **全量回归（`pytest tests/`�?*�?
@@ -152,7 +152,7 @@ git config core.hooksPath .githooks
 
 ### 9. 调试（按需�?�?`my-systematic-debugging` + `superpowers-skills-systematic-debugging`
 - 遇到 bug 时，同时调用两个 skill 定位根因
-- 先查根因，再�?②→�?修复流程
+- `n- **五问五答找根因**：不假设，连续五个"为什么�?直到触碰物理约束。每个答案必须有日志或代码证据支撑。`n- 先查根因，再�?②→�?修复流程
 
 ### QUICK COMPLIANCE CHECK
 
