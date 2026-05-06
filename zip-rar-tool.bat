@@ -9,7 +9,7 @@ set "LOGDATE=%LOGDATE:/=-%"
 set "LOGDATE=%LOGDATE: =_%"
 set "LOGFILE=%~dp0logs\runs\run_log_%LOGDATE%.txt"
 echo ===== %date% %time% ===== >> "%LOGFILE%"
-echo [START] New session >> "%LOGFILE%"
+echo [START] v0.2.2 >> "%LOGFILE%"
 
 :MENU
 cls
