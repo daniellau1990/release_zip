@@ -111,12 +111,60 @@ subprocess.run(['python', '-m', 'zip_rar_tool', 'extract', archive_clean, output
 
 ---
 
+## Root Cause #3: 相对输出路径解析到项目目录而非压缩包目录
+
+### 实际日志（v0.2.2 稳定版）
+
+```
+[START] v0.2.2
+[MENU] choice=1
+[EXTRACT] archive=C:\Users\surface\Desktop\新建文件夹 (2)\pi-autoresearch-main.zip
+[EXTRACT] output=1
+Extracted to 1
+[EXTRACT] done rc=0
+```
+
+提取成功 (rc=0)，但 `output=1` 是相对路径 → 解析到 `.bat` 工作目录（项目目录 `D:\AIAGENT应用\release_zip_rar\1\`），而非用户期望的 `C:\Users\surface\Desktop\新建文件夹 (2)\1\`。
+
+### 问题链
+
+| # | 为什么？ | 答案 |
+|---|---------|------|
+| Q1 | 为什么文件解压到了项目目录？ | `output=1` 是相对路径，`Path("1")` 相对于进程 CWD 解析 |
+| Q2 | CWD 为什么是项目目录？ | Windows 双击 .bat 时 CWD 自动设为 .bat 所在目录 |
+| Q3 | 这个 bug 之前出现过吗？ | 是 — v0.1.4 在 `batch_compress.py` 修过同源问题，但 `core.extract` 遗漏了 |
+| Q4 | batch_compress.py 怎么修的？ | `if not Path(output).is_absolute(): output = str(Path(inputs[0]).parent / output)` |
+| Q5 | 为什么 v0.1.4 没同时修 extract？ | 当时只关注 COMPRESS 流程，extract 的 output 参数走的是 typer 默认值 `.` 不会触发，只有用户手动输入相对路径才暴露 |
+
+### 修复 (v0.2.3)
+
+`core.py` extract 函数：
+```python
+def extract(archive_path: str, output_dir: str, password: str = None) -> str:
+    out = Path(output_dir)
+    if not out.is_absolute():
+        archive_parent = Path(archive_path).parent
+        out = archive_parent / out
+    ...
+    return str(out)
+```
+相对 `output` 现在以压缩包所在目录为基准解析。
+
+`cli.py` 同步更新：使用 core.extract 返回的解析后路径做 echo。
+
+### 用户验证
+
+> 已验证，解压输出正确到压缩包所在文件夹 ✅
+
+---
+
 ## 最终修复汇总
 
 | 版本 | Bug | 修复 |
 |------|-----|------|
 | v0.2.1 | 中文 `%date%` 斜杠 → LOGFILE 路径无效 | `/` → `-`, 空格 → `_`, mkdir 防御 |
 | v0.2.2 | 拖放引号 → CMD 参数分裂 → Typer 报错 | `set /p` 后 `set "v=%v:"=%"` 剥引号 |
+| v0.2.3 | 相对 output → 解析到项目目录而非压缩包目录 | core.extract 以 archive 目录为基准解析相对路径 |
 
 ### 经验教训
 
@@ -124,12 +172,15 @@ subprocess.run(['python', '-m', 'zip_rar_tool', 'extract', archive_clean, output
 2. **locale 差异是关键** — 英文 Windows `%date%` 用 `-` 分隔，中文用 `/`，代码需要跨 locale 测试
 3. **CMD 的引号解析极其脆弱** — `""..."..."` 不是嵌套引号，是参数分裂
 4. **运行日志的价值** — v0.2.1 的 LOGFILE 修复让 v0.2.2 的诊断变得简单，直接看到 Typer 报错
+5. **修一个地方不够，要全局搜索同源 bug** — v0.1.4 在 batch_compress.py 修了相对路径问题，但 core.extract 有同样逻辑却没同步修复
 
 ---
 
 ## 相关版本
 
 - v0.1.1 (2026-05-05 12:22:57) — 最后一次正常工作
+- v0.1.4 (2026-05-06 00:38:51) — 修了 COMPRESS 的相对路径，遗漏 EXTRACT
 - v0.2.0 (2026-05-06 14:33:19) — 引入日志功能，引入 Bug #1
 - v0.2.1 (2026-05-06 18:26:39) — 修复 Bug #1，暴露 Bug #2
-- v0.2.2 (2026-05-06 18:43:33) — 修复 Bug #2
+- v0.2.2 (2026-05-06 18:43:33) — 修复 Bug #2 **[STABLE]**
+- v0.2.3 (2026-05-06 19:16:21) — 修复 Bug #3
