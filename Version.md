@@ -21,6 +21,7 @@
 - Fix: extract output relative path now resolves relative to archive's directory
 - Root cause: `output=1` (relative) resolved against .bat CWD (project dir), not archive dir
 - Same fix pattern as v0.1.4 batch_compress.py, now applied to core.extract
+- 用户反馈: 已验证，解压输出正确到压缩包所在文件夹
 
 ---
 
