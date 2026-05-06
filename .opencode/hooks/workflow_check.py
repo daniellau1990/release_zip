@@ -8,7 +8,7 @@ PLANS = ROOT / "docs" / "plans"
 TODAY = date.today()
 
 ALLOW = ["AGENTS.md","CLAUDE.md","Version.md","README.md","LICENSE",
-    "docs/",".githooks/",".claude/",".opencode/","openspec/","bin/",
+    "docs/",".githooks/",".claude/",".opencode/","openspec/","bin/","logs/",
     "opencode.json","pyproject.toml",".gitignore",".pre-commit-config.yaml"]
 BLOCK = ["zip_rar_tool/","tests/","scripts/"]
 
@@ -54,13 +54,26 @@ def check_commit():
     print("  => run /opsx:propose <name>")
     return 2
 
+def check_logs():
+    import subprocess
+    r = subprocess.run(["git","diff","--cached","--diff-filter=D","--name-only"],capture_output=True,text=True,cwd=ROOT)
+    deleted = [f for f in r.stdout.strip().split("\n") if f and ("logs/runs/" in f or "docs/test-logs/" in f)]
+    if deleted:
+        print("[Guard] BLOCKED: Deleting log files is forbidden!")
+        for f in deleted: print("  - "+f)
+        print("  => Restore logs before commit (git checkout -- "+f+")")
+        return 2
+    return 0
+
 def main():
     import argparse
     a = argparse.ArgumentParser()
     a.add_argument("--file"); a.add_argument("--commit",action="store_true")
+    a.add_argument("--check-logs",action="store_true")
     o = a.parse_args()
     if o.file: sys.exit(check_file(o.file))
     elif o.commit: sys.exit(check_commit())
+    elif o.check_logs: sys.exit(check_logs())
     else: sys.exit(0)
 
 if __name__=="__main__": main()

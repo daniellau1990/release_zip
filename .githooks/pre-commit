@@ -3,11 +3,22 @@
 ROOT_DIR=$(git rev-parse --show-toplevel 2>/dev/null || echo '.')
 GUARD="$ROOT_DIR/.opencode/hooks/workflow_check.py"
 echo "=== [Tier 3] Commit Guard ==="
+
+# Check: workflow plan exists
 if [ -f "$GUARD" ]; then
   "$ROOT_DIR/.venv/Scripts/python.exe" "$GUARD" --commit || true
   rc=$?
   if [ $rc -eq 2 ]; then echo "ERROR: blocked"; exit 1; fi
 fi
+
+# Check: no log files being deleted
+if [ -f "$GUARD" ]; then
+  echo "--- Check log file deletions ---"
+  "$ROOT_DIR/.venv/Scripts/python.exe" "$GUARD" --check-logs || true
+  rc=$?
+  if [ $rc -eq 2 ]; then echo "ERROR: log deletion blocked"; exit 1; fi
+fi
+
 PY="$ROOT_DIR/.venv/Scripts/python.exe"
 if [ ! -f "$PY" ]; then PY=python; fi
 echo "--- Run tests ---"
