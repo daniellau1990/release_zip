@@ -4,7 +4,8 @@
 
 | Version | Git Tag | Commit | Time (UTC+8) |
 |---------|:-------:|:------:|--------------|
-| v0.2.2  | v0.2.2 | 30c4972 | 2026-05-06 18:43:33 |
+| v0.2.3  | v0.2.3 | PENDING | PENDING |
+| v0.2.2  | v0.2.2 | 30c4972 | 2026-05-06 18:43:33 | **STABLE** |
 | v0.2.1  | v0.2.1 | 3d573a1 | 2026-05-06 18:26:39 |
 | v0.2.0  | v0.2.0 | 055e579 | 2026-05-06 14:33:19 |
 | v0.1.4  | v0.1.4 | ad9974e | 2026-05-06 00:38:51 |
@@ -15,11 +16,21 @@
 
 ---
 
-## v0.2.2 (2026-05-06 18:43:33) tag: v0.2.2 commit: 30c4972
+## v0.2.3 (PENDING) tag: v0.2.3 commit: PENDING
+
+- Fix: extract output relative path now resolves relative to archive's directory
+- Root cause: `output=1` (relative) resolved against .bat CWD (project dir), not archive dir
+- Same fix pattern as v0.1.4 batch_compress.py, now applied to core.extract
+
+---
+
+## v0.2.2 (2026-05-06 18:43:33) tag: v0.2.2 commit: 30c4972 **[STABLE]**
 
 - Fix: strip drag-drop `"` from archive/files after set /p
 - Fix: use full %date% instead of truncated ~0,10 for LOGFILE filename
 - Root cause: drag-drop quotes cause CMD double-quoting -> Typer arg count mismatch
+- 用户反馈: 可以正常解压缩，提取成功。提取结果在 C:\Users\surface\Desktop\新建文件夹 (2)，确认 v0.2.2 解压功能正常工作
+- 遗留问题: 当用户输入相对路径作为 output（如 `1`）时，文件解压到项目目录而非压缩包所在目录。此问题在 v0.2.3 修复
 
 ---
 

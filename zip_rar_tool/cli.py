@@ -11,8 +11,8 @@ def extract(
     output: str = typer.Argument(".", help="Output directory"),
     password: str = typer.Option(None, "--password", "-p", help="Archive password"),
 ):
-    core.extract(archive, output, password)
-    typer.echo(f"Extracted to {output}")
+    resolved = core.extract(archive, output, password)
+    typer.echo(f"Extracted to {resolved}")
 
 
 @app.command()

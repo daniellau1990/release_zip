@@ -12,10 +12,15 @@ BACKENDS = {
 }
 
 
-def extract(archive_path: str, output_dir: str, password: str = None) -> None:
+def extract(archive_path: str, output_dir: str, password: str = None) -> str:
+    out = Path(output_dir)
+    if not out.is_absolute():
+        archive_parent = Path(archive_path).parent
+        out = archive_parent / out
     fmt = guess_format(archive_path)
     backend = BACKENDS[fmt]
-    backend.extract(Path(archive_path), Path(output_dir), password)
+    backend.extract(Path(archive_path), out, password)
+    return str(out)
 
 
 def list_files(archive_path: str) -> list:

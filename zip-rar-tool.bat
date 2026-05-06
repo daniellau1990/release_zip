@@ -9,12 +9,12 @@ set "LOGDATE=%LOGDATE:/=-%"
 set "LOGDATE=%LOGDATE: =_%"
 set "LOGFILE=%~dp0logs\runs\run_log_%LOGDATE%.txt"
 echo ===== %date% %time% ===== >> "%LOGFILE%"
-echo [START] v0.2.2 >> "%LOGFILE%"
+echo [START] v0.2.3 >> "%LOGFILE%"
 
 :MENU
 cls
 echo ======================================
-echo    ZIP/RAR/7z Tool  v0.2.1
+echo    ZIP/RAR/7z Tool  v0.2.3
 echo    Interactive Mode
 echo ======================================
 echo.
