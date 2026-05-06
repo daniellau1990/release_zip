@@ -4,7 +4,7 @@ setlocal enabledelayedexpansion
 
 set "PY=%~dp0.venv\Scripts\python.exe"
 if not exist "%~dp0logs\runs" mkdir "%~dp0logs\runs"
-set "LOGDATE=%date:~0,10%"
+set "LOGDATE=%date%"
 set "LOGDATE=%LOGDATE:/=-%"
 set "LOGDATE=%LOGDATE: =_%"
 set "LOGFILE=%~dp0logs\runs\run_log_%LOGDATE%.txt"
@@ -36,6 +36,7 @@ goto MENU
 cls
 echo ===== Extract =====
 set /p "archive=Archive path (drag file here): "
+set "archive=%archive:"=%"
 echo [EXTRACT] archive=%archive% >> "%LOGFILE%"
 if not defined archive goto MENU
 set /p "output=Output dir (Enter for default - archive name): "
@@ -52,6 +53,7 @@ cls
 echo ===== Compress (multi-file) =====
 set "files="
 set /p "files=Files/folders (select all, then drag here): "
+set "files=%files:"=%"
 echo [COMPRESS] raw input=%files% >> "%LOGFILE%"
 if not defined files goto MENU
 
@@ -82,6 +84,7 @@ goto MENU
 cls
 echo ===== List Contents =====
 set /p "archive=Archive path (drag file here): "
+set "archive=%archive:"=%"
 echo [LIST] archive=%archive% >> "%LOGFILE%"
 if "%archive%"=="" goto MENU
 "%PY%" -m zip_rar_tool list "%archive%" >> "%LOGFILE%" 2>&1
