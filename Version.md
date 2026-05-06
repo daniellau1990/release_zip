@@ -4,14 +4,14 @@
 
 | Version | Git Tag | Commit | Date |
 |---------|:-------:|:------:|:----:|
-| v0.2.2  | v0.2.2 | PENDING | 2026-05-06 |
+| v0.2.2  | v0.2.2 | 30c4972 | 2026-05-06 |
 | v0.2.1  | v0.2.1 | 3d573a1 | 2026-05-06 |
 | v0.1.1  | 0.1.1 | 2543dbf | 2026-05-04 |
 | v0.1.0  | 0.1.0 | 6688038 | 2026-05-04 |
 
 ---
 
-## v0.2.2 (2026-05-06) tag: v0.2.2 commit: PENDING
+## v0.2.2 (2026-05-06) tag: v0.2.2 commit: 30c4972
 
 - Fix: strip drag-drop `"` from archive/files after set /p
 - Fix: use full %date% instead of truncated ~0,10 for LOGFILE filename
