@@ -1,15 +1,25 @@
 from pathlib import Path
 import zipfile
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Callable
 
 
 class ZipBackend:
     @staticmethod
-    def extract(archive_path: Path, output_dir: Path, password: Optional[str] = None) -> None:
+    def extract(
+        archive_path: Path,
+        output_dir: Path,
+        password: Optional[str] = None,
+        progress_callback: Optional[Callable[[int, int], None]] = None,
+    ) -> None:
         with zipfile.ZipFile(archive_path, "r") as zf:
             if password:
                 zf.setpassword(password.encode("utf-8"))
-            zf.extractall(output_dir)
+            members = zf.infolist()
+            total = len(members)
+            for i, member in enumerate(members, 1):
+                zf.extract(member, output_dir)
+                if progress_callback:
+                    progress_callback(i, total)
 
     @staticmethod
     def list_files(archive_path: Path) -> List[Dict]:
@@ -24,9 +34,17 @@ class ZipBackend:
         return result
 
     @staticmethod
-    def compress(source_dir: Path, output_path: Path, password: Optional[str] = None) -> None:
+    def compress(
+        source_dir: Path,
+        output_path: Path,
+        password: Optional[str] = None,
+        progress_callback: Optional[Callable[[int, int], None]] = None,
+    ) -> None:
+        file_paths = [p for p in source_dir.rglob("*") if p.is_file()]
+        total = len(file_paths)
         with zipfile.ZipFile(output_path, "w", zipfile.ZIP_DEFLATED) as zf:
-            for file_path in source_dir.rglob("*"):
-                if file_path.is_file():
-                    arcname = str(file_path.relative_to(source_dir))
-                    zf.write(file_path, arcname)
+            for i, file_path in enumerate(file_paths, 1):
+                arcname = str(file_path.relative_to(source_dir))
+                zf.write(file_path, arcname)
+                if progress_callback:
+                    progress_callback(i, total)

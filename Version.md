@@ -4,6 +4,7 @@
 
 | Version | Git Tag | Commit | Time (UTC+8) |
 |---------|:-------:|:------:|--------------|
+| v0.3.0  | v0.3.0 | — | 2026-06-28 12:21:34 |
 | v0.2.4  | v0.2.4 | 0bc132e | 2026-06-28 11:30:21 |
 | v0.2.3  | v0.2.3 | f8c7b64 | 2026-05-06 19:16:21 |
 | v0.2.2  | v0.2.2 | 30c4972 | 2026-05-06 18:43:33 | **STABLE** |
@@ -14,6 +15,23 @@
 | v0.1.2  | v0.1.2 | 952c58a | 2026-05-05 19:22:25 |
 | v0.1.1  | v0.1.1 | 8dc2aad | 2026-05-05 12:22:57 |
 | v0.1.0  | v0.1.0 | 6688038 | 2026-05-04 23:01:48 |
+
+---
+
+## v0.3.0 (2026-06-28 12:21:34) tag: v0.3.0
+
+- **Feature: GUI 桌面应用（CustomTkinter）**
+  - 顶部三 Tab：解压 / 压缩 / 查看
+  - 真实进度条（逐文件回调），后台线程操作不阻塞 UI
+  - 密码支持，覆盖策略，跟随系统主题
+  - 中文界面，文件对话框交互
+- **Core API 升级：extract/compress 新增 progress_callback 参数（向后兼容）**
+  - ZIP backend: extractall → 逐文件 extract + 预收集文件列表 compress
+  - RAR backend: extractall → 逐文件 rf.extract
+  - 7z backend: extractall/writeall → 逐文件 extract/write + arcname 前缀
+- 新增: gui/ 模块（app.py + widgets/extract_tab, compress_tab, browse_tab, log_panel）
+- 新增: tests/test_progress_callback.py（3 tests）
+- ADR-0001: CustomTkinter 框架选型记录
 
 ---
 

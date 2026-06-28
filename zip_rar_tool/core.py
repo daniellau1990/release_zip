@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Optional, Callable
 
 from zip_rar_tool.utils import guess_format
 from zip_rar_tool.backends.zip_backend import ZipBackend
@@ -12,14 +13,19 @@ BACKENDS = {
 }
 
 
-def extract(archive_path: str, output_dir: str, password: str = None) -> str:
+def extract(
+    archive_path: str,
+    output_dir: str,
+    password: Optional[str] = None,
+    progress_callback: Optional[Callable[[int, int], None]] = None,
+) -> str:
     out = Path(output_dir)
     if not out.is_absolute():
         archive_parent = Path(archive_path).parent
         out = archive_parent / out
     fmt = guess_format(archive_path)
     backend = BACKENDS[fmt]
-    backend.extract(Path(archive_path), out, password)
+    backend.extract(Path(archive_path), out, password, progress_callback=progress_callback)
     return str(out)
 
 
@@ -29,7 +35,12 @@ def list_files(archive_path: str) -> list:
     return backend.list_files(Path(archive_path))
 
 
-def compress(source_dir: str, output_path: str, password: str = None) -> None:
+def compress(
+    source_dir: str,
+    output_path: str,
+    password: Optional[str] = None,
+    progress_callback: Optional[Callable[[int, int], None]] = None,
+) -> None:
     fmt = guess_format(output_path)
     backend = BACKENDS[fmt]
-    backend.compress(Path(source_dir), Path(output_path), password)
+    backend.compress(Path(source_dir), Path(output_path), password, progress_callback=progress_callback)
