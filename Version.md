@@ -4,6 +4,7 @@
 
 | Version | Git Tag | Commit | Time (UTC+8) |
 |---------|:-------:|:------:|--------------|
+| v0.2.4  | v0.2.4 | — | 2026-06-28 11:30:21 |
 | v0.2.3  | v0.2.3 | f8c7b64 | 2026-05-06 19:16:21 |
 | v0.2.2  | v0.2.2 | 30c4972 | 2026-05-06 18:43:33 | **STABLE** |
 | v0.2.1  | v0.2.1 | 3d573a1 | 2026-05-06 18:26:39 |
@@ -13,6 +14,24 @@
 | v0.1.2  | v0.1.2 | 952c58a | 2026-05-05 19:22:25 |
 | v0.1.1  | v0.1.1 | 8dc2aad | 2026-05-05 12:22:57 |
 | v0.1.0  | v0.1.0 | 6688038 | 2026-05-04 23:01:48 |
+
+---
+
+## v0.2.4 (2026-06-28 11:30:21) tag: v0.2.4
+
+- CLAUDE.md 全面改造：迁移 replace_txt 项目的工作流和规则
+  - Feature / Bug Fix 双轨开发工作流
+  - 设计探针（Feature Step 2）—— 不熟悉 API 不带假设编码
+  - 十问根因分析法 + Debug 后三步（lesson-learned + 规则自检）
+  - 常见错误模式及预防（速度偏见 / "简单修复"幻觉 / 文字游戏 / 自欺式自检）
+  - 硬规则（探针/诊断/功能测试不可跳过；widget/layout/thread/callback/event 零容忍）
+  - Behavioral Guidelines（Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution）
+  - 代码审查清单（6 项，每项附命令+输出证据）
+  - 三层测试体系（单元 / 功能 / 用户场景）
+  - "已完成" 证据标准（不可凭"代码看起来对"就宣布完成）
+  - HOOK 保护（精简为 Version.md 检查，移除三层防御方案）
+  - 日志规则增强（轮转、版本号标注）
+- 移除：OpenCode 三层防御方案、OpenSpec 工作流、QUICK COMPLIANCE CHECK
 
 ---
 

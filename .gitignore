@@ -6,3 +6,9 @@ __pycache__/
 *.zip
 *.7z
 *.rar
+.claude/
+logs/
+mockups/
+mockup_ctk.py
+.playwright-mcp/
+skills/
