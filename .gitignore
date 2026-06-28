@@ -12,3 +12,6 @@ mockups/
 mockup_ctk.py
 .playwright-mcp/
 skills/
+dist/
+build/
+*.spec
