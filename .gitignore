@@ -15,3 +15,10 @@ skills/
 dist/
 build/
 *.spec
+.pytest_cache/
+.opencode/
+opencode.json
+openspec/
+DEBUG.md
+CLAUDE.md
+UnRAR.exe
