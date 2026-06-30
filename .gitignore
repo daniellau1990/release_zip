@@ -15,6 +15,7 @@ skills/
 dist/
 build/
 *.spec
+release.md
 .pytest_cache/
 .opencode/
 opencode.json
